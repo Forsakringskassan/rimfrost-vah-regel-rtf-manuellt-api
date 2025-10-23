@@ -5,47 +5,47 @@ info:
   description: Manuell regel för att kontrollera om en person har rätt till Vård av husdjur.
 
 channels:
-  vah.rtf.requests:
-    address: vah.rtf.requests
+  vah.rtf.manuell.requests:
+    address: vah.rtf.manuell.requests
     messages:
-      VahRtfRequestMessage:
-        $ref: "#/components/messages/VahRtfRequestMessage"
+      VahRtfManuellRequestMessage:
+        $ref: "#/components/messages/VahRtfManuellRequestMessage"
 
-  vah.rtf.responses:
-    address: vah.rtf.responses
+  vah.rtf.manuell.responses:
+    address: vah.rtf.manuell.responses
     messages:
-      VahRtfResponseMessage:
-        $ref: "#/components/messages/VahRtfResponseMessage"
+      VahRtfManuellResponseMessage:
+        $ref: "#/components/messages/VahRtfManuellResponseMessage"
 
 operations:
-  onVahRtfRequest:
+  onVahRtfManuellRequest:
     action: receive
     summary: Tillämpar regeln och kontrollerar om personen har rätt till Vård av husdjur.
     channel:
-      $ref: "#/channels/vah.rtf.requests"
+      $ref: "#/channels/vah.rtf.manuell.requests"
     reply:
       address:
         description: Resultatet skickas tillbaka till källan.
         location: "$message.header#/replyTo"
       channel:
-        $ref: "#/channels/vah.rtf.responses"
+        $ref: "#/channels/vah.rtf.manuell.responses"
 
 components:
   messages:
-    VahRtfRequestMessage:
+    VahRtfManuellRequestMessage:
       headers:
-        $ref: "#/components/schemas/VahRtfRequestHeaders"
+        $ref: "#/components/schemas/VahRtfManuellRequestHeaders"
       payload:
-        $ref: "#/components/schemas/VahRtfRequestPayload"
+        $ref: "#/components/schemas/VahRtfManuellRequestPayload"
 
-    VahRtfResponseMessage:
+    VahRtfManuellResponseMessage:
       headers:
-        $ref: "#/components/schemas/VahRtfResponseHeaders"
+        $ref: "#/components/schemas/VahRtfManuellResponseHeaders"
       payload:
-        $ref: "#/components/schemas/VahRtfResponsePayload"
+        $ref: "#/components/schemas/VahRtfManuellResponsePayload"
 
   schemas:
-    VahRtfRequestHeaders:
+    VahRtfManuellRequestHeaders:
       type: object
       properties:
         replyTo:
@@ -54,7 +54,7 @@ components:
         correlationId:
           type: string
           description: Unikt id som kopplar ihop request & response
-    VahRtfRequestPayload:
+    VahRtfManuellRequestPayload:
       type: object
       properties:
         processId:
@@ -65,13 +65,13 @@ components:
           description: Svenskt personnummer 12 siffror
           pattern: '^\d{8}-\d{4}$'
           example: 19990101-0123
-    VahRtfResponseHeaders:
+    VahRtfManuellResponseHeaders:
       type: object
       properties:
         correlationId:
           type: string
           description: Unikt id som kopplar ihop request & response
-    VahRtfResponsePayload:
+    VahRtfManuellResponsePayload:
       type: object
       properties:
         processId:
