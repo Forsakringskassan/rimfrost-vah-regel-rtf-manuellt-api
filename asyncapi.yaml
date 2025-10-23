@@ -1,6 +1,6 @@
 asyncapi: 3.0.0
 info:
-  title: Regel - Rätt till försäkring (manuell)
+  title: Regel - Rätt till VAH-försäkring (manuell)
   version: 1.0.0
   description: Manuell regel för att kontrollera om en person har rätt till Vård av husdjur.
 
