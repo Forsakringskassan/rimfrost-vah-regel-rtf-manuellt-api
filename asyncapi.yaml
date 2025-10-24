@@ -62,7 +62,7 @@ components:
           description: Unikt id som identifierar processinstansen
         personNummer:
           type: string
-          description: Svenskt personnummer 12 siffror
+          description: Svenskt personnummer, 12 siffror med bindestreck (YYYYMMDD-XXXX)
           pattern: '^\d{8}-\d{4}$'
           example: 19990101-0123
     VahRtfManuellResponseHeaders:
@@ -79,7 +79,7 @@ components:
           description: Unikt id som identifierar processinstansen
         personNummer:
           type: string
-          description: Svenskt personnummer 12 siffror
+          description: Svenskt personnummer, 12 siffror med bindestreck (YYYYMMDD-XXXX)
           pattern: '^\d{8}-\d{4}$'
           example: 19990101-0123
         rattTillForsakring:
