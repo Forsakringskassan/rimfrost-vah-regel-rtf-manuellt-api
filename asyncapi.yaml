@@ -34,18 +34,30 @@ components:
   messages:
     VahRtfManuellRequestMessage:
       headers:
-        $ref: "#/components/schemas/VahRtfManuellRequestHeaders"
+        $ref: "#/components/schemas/VahRtfManuellRequestMessageHeaders"
       payload:
-        $ref: "#/components/schemas/VahRtfManuellRequestPayload"
+        title: VahRtfManuellRequestMessagePayload
+        allOf:
+          - $ref: "kogito-cloudevent.yaml#/components/schemas/KogitoCloudEvent"
+          - type: object
+            properties:
+              data:
+                $ref: "#/components/schemas/VahRtfManuellRequestMessageData"
 
     VahRtfManuellResponseMessage:
       headers:
-        $ref: "#/components/schemas/VahRtfManuellResponseHeaders"
+        $ref: "#/components/schemas/VahRtfManuellResponseMessageHeaders"
       payload:
-        $ref: "#/components/schemas/VahRtfManuellResponsePayload"
+        title: VahRtfManuellResponseMessagePayload
+        allOf:
+          - $ref: "kogito-cloudevent.yaml#/components/schemas/KogitoCloudEvent"
+          - type: object
+            properties:
+              data:
+                $ref: "#/components/schemas/VahRtfManuellResponseMessageData"
 
   schemas:
-    VahRtfManuellRequestHeaders:
+    VahRtfManuellRequestMessageHeaders:
       type: object
       properties:
         replyTo:
@@ -54,7 +66,7 @@ components:
         correlationId:
           type: string
           description: Unikt id som kopplar ihop request & response
-    VahRtfManuellRequestPayload:
+    VahRtfManuellRequestMessageData:
       type: object
       properties:
         processId:
@@ -65,13 +77,13 @@ components:
           description: Svenskt personnummer, 12 siffror med bindestreck (YYYYMMDD-XXXX)
           pattern: '^\d{8}-\d{4}$'
           example: 19990101-0123
-    VahRtfManuellResponseHeaders:
+    VahRtfManuellResponseMessageHeaders:
       type: object
       properties:
         correlationId:
           type: string
           description: Unikt id som kopplar ihop request & response
-    VahRtfManuellResponsePayload:
+    VahRtfManuellResponseMessageData:
       type: object
       properties:
         processId:
