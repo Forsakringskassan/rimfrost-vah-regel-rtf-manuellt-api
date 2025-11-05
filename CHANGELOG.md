@@ -1,3 +1,9 @@
+## 0.2.0 (2025-11-05)
+
+### Features
+
+-  add cloudevent structure to asyncapi specification ([5a949](https://github.com/Forsakringskassan/rimfrost-vah-regel-rtf-manuellt-api/commit/5a9494a395b8120) Nils Elveros)  
+
 ## 0.1.0 (2025-10-30)
 
 ### Features
