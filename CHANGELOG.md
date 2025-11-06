@@ -1,3 +1,9 @@
+## 0.2.1 (2025-11-06)
+
+### Bug Fixes
+
+-  groupid se.fk.rimfrost ([df521](https://github.com/Forsakringskassan/rimfrost-vah-regel-rtf-manuellt-api/commit/df52193a1b9873a) Nils Elveros)  
+
 ## 0.2.0 (2025-11-05)
 
 ### Features
