@@ -43,6 +43,40 @@ components:
       additionalProperties: true
       description: Parameterdata i valfritt format. Backend äger strukturen
 
+    Kundbehov:
+      type: object
+      required:
+        - id
+        - version
+      properties:
+        id:
+          type: string
+          description: Unikt ID som identifierar kundbehovet
+        version:
+          type: string
+          description: Versionen av kundbehovet
+
+    KundId:
+      type: object
+      oneOf:
+        - personnummer
+        - organisationsnummer
+      properties:
+        personnummer:
+          $ref: '#/components/schemas/Personnummer'
+        organisationsnummer:
+          $ref: '#/components/schemas/Organisationsnummer'
+
+    Personnummer:
+      type: string
+      description: Svenskt personnummer (12 siffror med bindestreck)
+      format: '^\d{8}-d{4}$'
+
+    Organisationsnummer:
+      type: string
+      description: Svenskt organisationsnummer (10 siffror med bindestreck)
+      format: '^\d{6}-d{4}$'
+
     VahRtfManuellRequestMessageHeaders:
       type: object
       properties:
@@ -64,8 +98,14 @@ components:
         version:
           type: string
           description: Versionen av processflödet som har skickat requestet
+        kund_id:
+          type: object
+          description: Unik ID som identifierar kunden, vare sig person eller organisation.
+          $ref: '#/components/schemas/KundId'
         parameterdata:
           $ref: '#/components/schemas/Parameterdata'
+        kundbehov:
+          $ref: '#/components/schemas/Kundbehov'
 
     VahRtfManuellResponseMessageHeaders:
       type: object
