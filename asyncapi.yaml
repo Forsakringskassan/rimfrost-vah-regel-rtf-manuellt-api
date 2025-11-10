@@ -31,6 +31,133 @@ operations:
         $ref: "#/channels/vah.rtf.manuell.responses"
 
 components:
+  schemas:
+    Parameterdata:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: Unikt ID som identifierar data objektet
+      additionalProperties: true
+      description: Parameterdata i valfritt format. Backend äger strukturen
+
+    Kundbehov:
+      type: object
+      required:
+        - id
+        - version
+      properties:
+        id:
+          type: string
+          description: Unikt ID som identifierar kundbehovet
+        version:
+          type: string
+          description: Versionen av kundbehovet
+
+    KundId:
+      type: object
+      oneOf:
+        - personnummer
+        - organisationsnummer
+      properties:
+        personnummer:
+          $ref: '#/components/schemas/Personnummer'
+        organisationsnummer:
+          $ref: '#/components/schemas/Organisationsnummer'
+
+    Personnummer:
+      type: string
+      description: Svenskt personnummer (12 siffror med bindestreck)
+      format: '^\d{8}-d{4}$'
+
+    Organisationsnummer:
+      type: string
+      description: Svenskt organisationsnummer (10 siffror med bindestreck)
+      format: '^\d{6}-d{4}$'
+
+    VahRtfManuellRequestMessageHeaders:
+      type: object
+      properties:
+        replyTo:
+          type: string
+          description: Topic där response ska skickas
+        correlationId:
+          type: string
+          description: Unikt ID som kopplar ihop request & response
+
+    VahRtfManuellRequestMessageData:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: Unikt ID som identifierar processinstansen
+        version:
+          type: string
+          description: Versionen av processflödet som har skickat requestet
+        kund_id:
+          type: object
+          description: Unik ID som identifierar kunden, vare sig person eller organisation.
+          $ref: '#/components/schemas/KundId'
+        parameterdata:
+          $ref: '#/components/schemas/Parameterdata'
+        kundbehov:
+          $ref: '#/components/schemas/Kundbehov'
+
+    VahRtfManuellResponseMessageHeaders:
+      type: object
+      properties:
+        correlationId:
+          type: string
+          description: Unikt ID som kopplar ihop request & response
+
+    VahRtfManuellResponseMessageData:
+      type: object
+      required:
+        - processId
+        - id
+      properties:
+        id:
+          type: string
+          description: Unikt ID som identifierar regeln
+        version:
+          type: string
+          description: Versionen av regeln som har utförts
+        process_id:
+          type: string
+          description: Unikt ID som identifierar processinstansen
+        utforar_id:
+          type: string
+          description: Unikt ID som identifierar utföraren
+        utford_tid:
+          type: string
+          description: DateTime av när uppgiften utfördes i ISO 8601 format
+        status:
+          type: string
+          description: Status av uppgiften
+        fssa:
+          type: string
+          description: FSSÄ-information till kunden
+        regelutfall:
+          type: object
+          $ref: '#/components/schemas/Regelutfall'
+
+    Regelutfall:
+      type: object
+      required:
+        - typ
+        - varde
+      properties:
+        typ:
+          type: object
+          description: Typen av objekt som utfallet är
+        value:
+          type: string
+          description: Värdet av objektet som utfallet är av
+
   messages:
     VahRtfManuellRequestMessage:
       headers:
@@ -56,45 +183,3 @@ components:
               data:
                 $ref: "#/components/schemas/VahRtfManuellResponseMessageData"
 
-  schemas:
-    VahRtfManuellRequestMessageHeaders:
-      type: object
-      properties:
-        replyTo:
-          type: string
-          description: Topic där response ska skickas
-        correlationId:
-          type: string
-          description: Unikt id som kopplar ihop request & response
-    VahRtfManuellRequestMessageData:
-      type: object
-      properties:
-        processId:
-          type: string
-          description: Unikt id som identifierar processinstansen
-        personNummer:
-          type: string
-          description: Svenskt personnummer, 12 siffror med bindestreck (YYYYMMDD-XXXX)
-          pattern: '^\d{8}-\d{4}$'
-          example: 19990101-0123
-    VahRtfManuellResponseMessageHeaders:
-      type: object
-      properties:
-        correlationId:
-          type: string
-          description: Unikt id som kopplar ihop request & response
-    VahRtfManuellResponseMessageData:
-      type: object
-      properties:
-        processId:
-          type: string
-          description: Unikt id som identifierar processinstansen
-        personNummer:
-          type: string
-          description: Svenskt personnummer, 12 siffror med bindestreck (YYYYMMDD-XXXX)
-          pattern: '^\d{8}-\d{4}$'
-          example: 19990101-0123
-        rattTillForsakring:
-          type: boolean
-          description: Utfall av regel, om personen har rätt till försäkring
-          example: true

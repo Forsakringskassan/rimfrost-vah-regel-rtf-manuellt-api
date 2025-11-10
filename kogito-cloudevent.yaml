@@ -1,3 +1,6 @@
+asyncapi: 3.0.0
+info: { title: Kogito CloudEvent base, version: 1.0.0 }
+
 components:
   schemas:
     KogitoCloudEvent:
