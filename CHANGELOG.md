@@ -1,3 +1,8 @@
+## Unreleased ()
+
+### Other changes
+
+
 ## 0.2.1 (2025-11-06)
 
 ### Bug Fixes
