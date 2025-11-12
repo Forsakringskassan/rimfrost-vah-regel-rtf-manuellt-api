@@ -58,24 +58,26 @@ components:
 
     KundId:
       type: object
-      oneOf:
-        - personnummer
-        - organisationsnummer
       properties:
         personnummer:
           $ref: '#/components/schemas/Personnummer'
         organisationsnummer:
           $ref: '#/components/schemas/Organisationsnummer'
+      oneOf:
+        - required:
+            - personnummer
+        - required:
+            - organisationsnummer
 
     Personnummer:
       type: string
       description: Svenskt personnummer (12 siffror med bindestreck)
-      format: '^\d{8}-d{4}$'
+      pattern: '^\d{8}-\d{4}$'
 
     Organisationsnummer:
       type: string
       description: Svenskt organisationsnummer (10 siffror med bindestreck)
-      format: '^\d{6}-d{4}$'
+      pattern: '^\d{6}-\d{4}$'
 
     VahRtfManuellRequestMessageHeaders:
       type: object
@@ -168,6 +170,10 @@ components:
           - $ref: "kogito-cloudevent.yaml#/components/schemas/KogitoCloudEvent"
           - type: object
             properties:
+              type:
+                type: string
+                const: vah-rtf-manuell-requests
+                default: vah-rtf-manuell-requests
               data:
                 $ref: "#/components/schemas/VahRtfManuellRequestMessageData"
 
@@ -180,6 +186,10 @@ components:
           - $ref: "kogito-cloudevent.yaml#/components/schemas/KogitoCloudEvent"
           - type: object
             properties:
+              type:
+                type: string
+                const: vah-rtf-manuell-responses
+                default: vah-rtf-manuell-responses
               data:
                 $ref: "#/components/schemas/VahRtfManuellResponseMessageData"
 
